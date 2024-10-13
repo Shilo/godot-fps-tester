@@ -1,9 +1,67 @@
-[gd_scene format=3 uid="uid://cohivduhr2si4"]
+[gd_scene load_steps=4 format=3 uid="uid://cohivduhr2si4"]
 
-[node name="Main" type="Control"]
-layout_mode = 3
+[ext_resource type="Script" path="res://framerate_label.gd" id="1_ey355"]
+[ext_resource type="Script" path="res://framerate_option_button.gd" id="2_btd2g"]
+[ext_resource type="Script" path="res://vertical_sync_option_button.gd" id="3_3tjb5"]
+
+[node name="Main" type="CenterContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="FramerateLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "60 FPS"
+horizontal_alignment = 1
+script = ExtResource("1_ey355")
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Frame rate:"
+
+[node name="FramerateOptionButton" type="OptionButton" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+selected = 4
+item_count = 5
+popup/item_0/text = "30"
+popup/item_0/id = 30
+popup/item_1/text = "60"
+popup/item_1/id = 60
+popup/item_2/text = "120"
+popup/item_2/id = 120
+popup/item_3/text = "144"
+popup/item_3/id = 144
+popup/item_4/text = "Unlimited"
+popup/item_4/id = 1
+script = ExtResource("2_btd2g")
+
+[node name="Label2" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Vertical sync: "
+
+[node name="VerticalSyncOptionButton" type="OptionButton" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "Off"
+popup/item_1/text = "Enabled"
+popup/item_1/id = 1
+popup/item_2/text = "Adaptive"
+popup/item_2/id = 2
+popup/item_3/text = "Mailbox"
+popup/item_3/id = 3
+script = ExtResource("3_3tjb5")
+
+[connection signal="item_selected" from="VBoxContainer/GridContainer/FramerateOptionButton" to="VBoxContainer/GridContainer/FramerateOptionButton" method="_on_item_selected"]
+[connection signal="item_selected" from="VBoxContainer/GridContainer/VerticalSyncOptionButton" to="VBoxContainer/GridContainer/VerticalSyncOptionButton" method="_on_item_selected"]
